@@ -61,13 +61,16 @@ public class UserController {
         return ResponseEntity.created(location).build();
     }
 
-    
+
     @DeleteMapping("{id}")
     public ResponseEntity<Object> deleteUser(@PathVariable("{id}") String id) {
         return service.getUserById(UUID.fromString(id))
                 .map(user -> ResponseEntity.ok().build())
                 .orElseGet(() -> ResponseEntity.notFound().build());
+
     }
+
+    
 
 
 }
