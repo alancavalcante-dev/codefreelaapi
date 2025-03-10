@@ -7,13 +7,13 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
-public class GlobalExceptionHandler extends RuntimeException{
-    public GlobalExceptionHandler(String message) {
-        super(message);
-    }
+public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<String> ErroTeste(MethodArgumentNotValidException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    public ResponseEntity<String> handleValidationException(MethodArgumentNotValidException ex) {
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body("Erro de validação de campo: " + ex.getBindingResult().getFieldError().getDefaultMessage());
     }
 }
+

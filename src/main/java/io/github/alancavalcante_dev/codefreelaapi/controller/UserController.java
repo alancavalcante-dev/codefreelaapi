@@ -14,6 +14,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -58,6 +59,14 @@ public class UserController {
                 .path("/{id}").buildAndExpand(entity.getIdUser()).toUri();
 
         return ResponseEntity.created(location).build();
+    }
+
+    
+    @DeleteMapping("{id}")
+    public ResponseEntity<Object> deleteUser(@PathVariable("{id}") String id) {
+        return service.getUserById(UUID.fromString(id))
+                .map(user -> ResponseEntity.ok().build())
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
 
