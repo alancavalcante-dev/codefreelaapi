@@ -15,7 +15,7 @@ import java.util.UUID;
 public class UserService {
 
     private final UserRepository repository;
-//    private final UserValidate validate;
+    private final UserValidate validate;
 
     public User save(User user) {
 //        validate.save(user);

@@ -17,6 +17,7 @@ import java.util.UUID;
 public class ProfileClient {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id_profile_client")
     private UUID idProfileClient;
 
