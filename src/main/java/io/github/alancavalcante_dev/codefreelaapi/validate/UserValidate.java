@@ -12,7 +12,7 @@ public class UserValidate {
     private final UserRepository repository;
 
 
-    public Void save(User user) {
-        System.out.println(user);
-    }
+//    public Void save(User user) {
+//        System.out.println(user);
+//    }
 }
