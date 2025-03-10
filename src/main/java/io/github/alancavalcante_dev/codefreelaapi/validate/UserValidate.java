@@ -22,4 +22,11 @@ public class UserValidate {
             throw new UsernameDuplicadoExeption("Esse username já esta sendo usado, tente outro!");
         }
     }
+
+    public void update(User user) {
+        Optional<User> userGet = repository.findByUsernameDistinctId(user.getUsername(), user.getIdUser());
+        if (userGet.isPresent()) {
+            throw new UsernameDuplicadoExeption("Esse username já esta sendo usado, tente outro!");
+        }
+    }
 }

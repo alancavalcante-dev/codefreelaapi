@@ -22,6 +22,11 @@ public class UserService {
         return repository.save(user);
     }
 
+    public User update(User user) {
+        validate.update(user);
+        return repository.save(user);
+    }
+
 
     public List<User> getUsers() {
         return repository.findAll();

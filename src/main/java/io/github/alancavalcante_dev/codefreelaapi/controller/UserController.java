@@ -7,6 +7,7 @@ import io.github.alancavalcante_dev.codefreelaapi.model.User;
 import io.github.alancavalcante_dev.codefreelaapi.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +31,6 @@ public class UserController {
     @GetMapping
     public ResponseEntity<List<UserResponseDTO>> getUsers() {
         List<User> usersAll = service.getUsers();
-        System.out.println(usersAll);
         List<UserResponseDTO> users = usersAll.stream()
                 .map(mapper::toResponseDTO)
                 .collect(Collectors.toList());
@@ -59,6 +59,22 @@ public class UserController {
                 .path("/{id}").buildAndExpand(entity.getIdUser()).toUri();
 
         return ResponseEntity.created(location).build();
+    }
+
+
+    @PutMapping("{id}")
+    public ResponseEntity<UserResponseDTO> updateUser(
+            @PathVariable("id") String idUser,
+            @RequestBody @Valid UserRequestDTO userDTO
+    ) {
+        System.out.println(userDTO);
+        return service.getUserById(UUID.fromString(idUser))
+                .map(user -> {
+                    User entity = mapper.toEntity(userDTO);
+                    entity.setIdUser(user.getIdUser());
+                    service.update(entity);
+                    return ResponseEntity.ok(mapper.toResponseDTO(entity));
+                }).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
 

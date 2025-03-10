@@ -10,8 +10,8 @@ import java.util.UUID;
 
 public interface UserRepository extends JpaRepository<User, UUID> {
 
-//    @Query("SELECT u FROM User u WHERE u.username = ?1 and u.idUser <> ?2")
-//    Optional<User> findByUsernameDistinctId(String username, UUID idUser);
+    @Query("SELECT u FROM User u WHERE u.username = ?1 and u.idUser <> ?2")
+    Optional<User> findByUsernameDistinctId(String username, UUID idUser);
 
     Optional<User> findByUsername(String username);
 
