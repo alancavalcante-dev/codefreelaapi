@@ -1,4 +1,4 @@
-package io.github.alancavalcante_dev.codefreelaapi.exceptionhandler;
+package io.github.alancavalcante_dev.codefreelaapi.commom;
 
 import io.github.alancavalcante_dev.codefreelaapi.exceptions.UsernameDuplicadoExeption;
 import org.springframework.http.HttpStatus;

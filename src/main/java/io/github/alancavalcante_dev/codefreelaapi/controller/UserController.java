@@ -67,7 +67,6 @@ public class UserController {
             @PathVariable("id") String idUser,
             @RequestBody @Valid UserRequestDTO userDTO
     ) {
-        System.out.println(userDTO);
         return service.getUserById(UUID.fromString(idUser))
                 .map(user -> {
                     User entity = mapper.toEntity(userDTO);

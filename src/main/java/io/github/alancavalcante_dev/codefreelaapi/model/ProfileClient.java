@@ -21,10 +21,9 @@ public class ProfileClient {
     @Column(name = "id_profile_client")
     private UUID idProfileClient;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_user", referencedColumnName = "id_user")
     private User user;
-
 
     @Column(length = 100, nullable = false)
     private String name;
@@ -32,7 +31,7 @@ public class ProfileClient {
     @Column(length = 100, nullable = false)
     private String email;
 
-    @Column(length = 14, nullable = false, unique = true)
+    @Column(length = 11, nullable = false, unique = true)
     private String cpf;
 
     @Column(nullable = false)
@@ -44,4 +43,6 @@ public class ProfileClient {
 
     @LastModifiedDate
     private LocalDateTime dateLastModify;
+
+
 }
