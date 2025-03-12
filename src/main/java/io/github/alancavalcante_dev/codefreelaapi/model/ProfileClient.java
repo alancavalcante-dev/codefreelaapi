@@ -39,6 +39,10 @@ public class ProfileClient {
     @Column(length = 11, nullable = false, unique = true)
     private String cpf;
 
+    @OneToOne
+    @JoinColumn(name = "id_address")
+    private Address address;
+
     @Column(nullable = false)
     private boolean isPj;
 
@@ -48,6 +52,8 @@ public class ProfileClient {
 
     @LastModifiedDate
     private LocalDateTime dateLastModify;
+
+
 
 
 }

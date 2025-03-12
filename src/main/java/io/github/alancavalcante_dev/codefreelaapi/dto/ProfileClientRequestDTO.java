@@ -1,6 +1,7 @@
 package io.github.alancavalcante_dev.codefreelaapi.dto;
 
 
+import io.github.alancavalcante_dev.codefreelaapi.model.Address;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -42,5 +43,6 @@ public class ProfileClientRequestDTO {
     @NotNull(message = "Tem que definir se é Pessoa Juridica ou não.")
     boolean isPj;
 
+    Address address;
 
 }
