@@ -1,7 +1,8 @@
 package io.github.alancavalcante_dev.codefreelaapi.controller;
 
-import io.github.alancavalcante_dev.codefreelaapi.dto.ProfileClientRequestDTO;
+import io.github.alancavalcante_dev.codefreelaapi.dto.ProfileClientInsertRequestDTO;
 import io.github.alancavalcante_dev.codefreelaapi.dto.ProfileClientResponseDTO;
+import io.github.alancavalcante_dev.codefreelaapi.dto.ProfileClientUpdateRequestDTO;
 import io.github.alancavalcante_dev.codefreelaapi.mapperstruct.ProfileClientMapper;
 import io.github.alancavalcante_dev.codefreelaapi.model.ProfileClient;
 import io.github.alancavalcante_dev.codefreelaapi.service.ProfileClientService;
@@ -44,7 +45,7 @@ public class ProfileClientController {
     }
 
     @PostMapping
-    public ResponseEntity<ProfileClientRequestDTO> postProfileClient(@RequestBody @Valid ProfileClientRequestDTO client ) {
+    public ResponseEntity<ProfileClientInsertRequestDTO> postProfileClient(@RequestBody @Valid ProfileClientInsertRequestDTO client ) {
         ProfileClient entity = mapper.toEntity(client);
         service.save(entity);
 
@@ -58,13 +59,15 @@ public class ProfileClientController {
     @PutMapping("{id}")
     public ResponseEntity<ProfileClientResponseDTO> updateProfileClient(
             @PathVariable("id") String idClient,
-            @RequestBody @Valid ProfileClientRequestDTO profileClientResponseDTO
+            @RequestBody @Valid ProfileClientUpdateRequestDTO profileClientUpdateResponseDTO
     ) {
         return service.getByIdProfileClient(UUID.fromString(idClient))
                 .map(p -> {
-                    ProfileClient entity = mapper.toEntity(profileClientResponseDTO);
+                    ProfileClient entity = mapper.toEntityUpdate(profileClientUpdateResponseDTO);
                     entity.setIdClient(p.getIdClient());
-                    service.update(entity);
+                    entity.setUsername(p.getUsername());
+                    entity.setPassword(p.getPassword());
+                    service.update(entity, p.getAddress().getIdAddress());
                     return ResponseEntity.ok(mapper.toResponseDTO(entity));
                 }).orElseGet(() -> ResponseEntity.notFound().build());
     }

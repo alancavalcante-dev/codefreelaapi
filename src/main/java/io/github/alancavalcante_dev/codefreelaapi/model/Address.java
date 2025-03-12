@@ -1,13 +1,17 @@
 package io.github.alancavalcante_dev.codefreelaapi.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
 @Entity
 @Table(name = "tbl_address")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Address {
 
     @Id
@@ -29,8 +33,4 @@ public class Address {
 
     @Column(name = "address_number")
     private int addressNumber;
-
-
-
-
 }

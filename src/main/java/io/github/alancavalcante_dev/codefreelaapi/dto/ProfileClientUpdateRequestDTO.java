@@ -1,25 +1,16 @@
 package io.github.alancavalcante_dev.codefreelaapi.dto;
 
-
 import io.github.alancavalcante_dev.codefreelaapi.model.Address;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class ProfileClientRequestDTO {
-
-    @NotNull
-    @NotBlank
-    @Size(min = 2, message = "Username: Mínimo de 2 caracteres e máximo de 20 caracteres", max = 20)
-    String username;
-
-    @NotNull
-    @NotBlank
-    @Size(min = 2, message = "Senha: Mínimo de 2 caracteres e máximo de 20 caracteres", max = 20)
-    String password;
-
+public class ProfileClientUpdateRequestDTO {
 
     @NotNull
     @NotBlank
@@ -44,5 +35,4 @@ public class ProfileClientRequestDTO {
     boolean isPj;
 
     Address address;
-
 }
