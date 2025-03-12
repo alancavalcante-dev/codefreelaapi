@@ -1,5 +1,6 @@
-package io.github.alancavalcante_dev.codefreelaapi.dto;
+package io.github.alancavalcante_dev.codefreelaapi.dto.client;
 
+import io.github.alancavalcante_dev.codefreelaapi.dto.AddressDTO;
 import lombok.Getter;
 import lombok.Setter;
 

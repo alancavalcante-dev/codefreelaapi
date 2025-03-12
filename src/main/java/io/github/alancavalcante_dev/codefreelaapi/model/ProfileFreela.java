@@ -10,16 +10,18 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+
+
 @Entity
-@Table(name = "tbl_profile_client")
+@Table(name = "tbl_profile_freela")
 @Data
 @EntityListeners(AuditingEntityListener.class)
-public class ProfileClient {
+public class ProfileFreela {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id_profile_client")
-    private UUID idClient;
+    @Column(name = "id_profile_freela")
+    private UUID idFreela;
 
     @Column(length = 20, nullable = false, unique = true)
     private String username;
@@ -53,3 +55,4 @@ public class ProfileClient {
     @LastModifiedDate
     private LocalDateTime dateLastModify;
 }
+
