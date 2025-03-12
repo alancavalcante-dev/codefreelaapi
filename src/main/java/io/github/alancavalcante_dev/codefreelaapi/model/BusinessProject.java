@@ -44,4 +44,6 @@ public class BusinessProject {
 
     @Column(name = "state")
     private StateBusiness stateBusiness;
+
+
 }

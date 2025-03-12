@@ -19,7 +19,7 @@ public class BusinessProjectProfile {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
-    private UUID id;
+    private UUID idBusinessProjectProfile;
 
     @ManyToOne
     @JoinColumn(name = "id_business_project", nullable = false)
