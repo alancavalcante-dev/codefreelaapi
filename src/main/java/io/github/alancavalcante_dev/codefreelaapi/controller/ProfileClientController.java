@@ -1,9 +1,9 @@
 package io.github.alancavalcante_dev.codefreelaapi.controller;
 
-import io.github.alancavalcante_dev.codefreelaapi.dto.ProfileClientDTO;
+import io.github.alancavalcante_dev.codefreelaapi.dto.ProfileClientRequestDTO;
+import io.github.alancavalcante_dev.codefreelaapi.dto.ProfileClientResponseDTO;
 import io.github.alancavalcante_dev.codefreelaapi.mapperstruct.ProfileClientMapper;
 import io.github.alancavalcante_dev.codefreelaapi.model.ProfileClient;
-import io.github.alancavalcante_dev.codefreelaapi.model.User;
 import io.github.alancavalcante_dev.codefreelaapi.service.ProfileClientService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -25,9 +25,9 @@ public class ProfileClientController {
 
 
     @GetMapping
-    public ResponseEntity<List<ProfileClientDTO>> getAllProfileClient() {
+    public ResponseEntity<List<ProfileClientResponseDTO>> getAllProfileClient() {
         List<ProfileClient> allProfileClients = service.getAllProfileClients();
-        List<ProfileClientDTO> listProfileClientDTO = allProfileClients.stream().
+        List<ProfileClientResponseDTO> listProfileClientDTO = allProfileClients.stream().
                 map(mapper::toResponseDTO).toList();
 
         if (listProfileClientDTO.isEmpty()) {
@@ -37,33 +37,33 @@ public class ProfileClientController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<ProfileClientDTO> getProfileClient(@PathVariable("id") String id) {
+    public ResponseEntity<ProfileClientResponseDTO> getProfileClient(@PathVariable("id") String id) {
         return service.getByIdProfileClient(UUID.fromString(id))
                 .map(p -> ResponseEntity.ok(mapper.toResponseDTO(p)))
                 .orElseGet( () -> ResponseEntity.notFound().build() );
     }
 
     @PostMapping
-    public ResponseEntity<ProfileClientDTO> postProfileClient( @RequestBody @Valid ProfileClientDTO client ) {
+    public ResponseEntity<ProfileClientRequestDTO> postProfileClient(@RequestBody @Valid ProfileClientRequestDTO client ) {
         ProfileClient entity = mapper.toEntity(client);
         service.save(entity);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{id}").buildAndExpand(entity.getIdProfileClient()).toUri();
+                .path("/{id}").buildAndExpand(entity.getIdClient()).toUri();
 
         return ResponseEntity.created(location).build();
     }
 
 
     @PutMapping("{id}")
-    public ResponseEntity<ProfileClientDTO> updateProfileClient(
-            @PathVariable("id") String idUser,
-            @RequestBody @Valid ProfileClientDTO profileClientResponseDTO
+    public ResponseEntity<ProfileClientResponseDTO> updateProfileClient(
+            @PathVariable("id") String idClient,
+            @RequestBody @Valid ProfileClientRequestDTO profileClientResponseDTO
     ) {
-        return service.getByIdProfileClient(UUID.fromString(idUser))
+        return service.getByIdProfileClient(UUID.fromString(idClient))
                 .map(p -> {
                     ProfileClient entity = mapper.toEntity(profileClientResponseDTO);
-                    entity.setIdProfileClient(p.getIdProfileClient());
+                    entity.setIdClient(p.getIdClient());
                     service.update(entity);
                     return ResponseEntity.ok(mapper.toResponseDTO(entity));
                 }).orElseGet(() -> ResponseEntity.notFound().build());
@@ -79,8 +79,4 @@ public class ProfileClientController {
                     return ResponseEntity.noContent().build();
                 }).orElseGet(() -> ResponseEntity.notFound().build());
     }
-
-
-
-
 }

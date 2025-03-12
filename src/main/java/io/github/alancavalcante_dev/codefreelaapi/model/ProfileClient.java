@@ -19,17 +19,22 @@ public class ProfileClient {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id_profile_client")
-    private UUID idProfileClient;
+    private UUID idClient;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_user", referencedColumnName = "id_user")
-    private User user;
+    @Column(length = 20, nullable = false, unique = true)
+    private String username;
+
+    @Column(length = 20, nullable = false)
+    private String password;
 
     @Column(length = 100, nullable = false)
     private String name;
 
     @Column(length = 100, nullable = false)
     private String email;
+
+    @Column(length = 13)
+    private String phone;
 
     @Column(length = 11, nullable = false, unique = true)
     private String cpf;

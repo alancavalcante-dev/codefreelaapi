@@ -1,16 +1,17 @@
 package io.github.alancavalcante_dev.codefreelaapi.mapperstruct;
 
-import io.github.alancavalcante_dev.codefreelaapi.dto.ProfileClientDTO;
+import io.github.alancavalcante_dev.codefreelaapi.dto.ProfileClientRequestDTO;
+import io.github.alancavalcante_dev.codefreelaapi.dto.ProfileClientResponseDTO;
 import io.github.alancavalcante_dev.codefreelaapi.model.ProfileClient;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface ProfileClientMapper {
 
-    ProfileClient toEntity(ProfileClientDTO profileClientResponseDTO);
+    ProfileClient toEntity(ProfileClientRequestDTO client);
 
-    @Mapping(target = "user", source = "user")
-    ProfileClientDTO toResponseDTO(ProfileClient profileClient);
+    ProfileClientRequestDTO toRequestDTO(ProfileClient client);
+
+    ProfileClientResponseDTO toResponseDTO(ProfileClient client);
 
 }

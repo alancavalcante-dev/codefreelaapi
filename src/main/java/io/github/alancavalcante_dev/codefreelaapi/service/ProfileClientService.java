@@ -2,10 +2,8 @@ package io.github.alancavalcante_dev.codefreelaapi.service;
 
 
 import io.github.alancavalcante_dev.codefreelaapi.model.ProfileClient;
-import io.github.alancavalcante_dev.codefreelaapi.model.User;
 import io.github.alancavalcante_dev.codefreelaapi.repository.ProfileClientRepository;
 import io.github.alancavalcante_dev.codefreelaapi.validate.ProfileClientValidate;
-import io.github.alancavalcante_dev.codefreelaapi.validate.UserValidate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +16,7 @@ import java.util.UUID;
 public class ProfileClientService {
 
     private final ProfileClientRepository repository;
-    private final UserValidate validateUser;
+    private final ProfileClientValidate validate;
 
     public List<ProfileClient> getAllProfileClients() {
         return repository.findAll();
@@ -31,13 +29,13 @@ public class ProfileClientService {
     }
 
     public ProfileClient update(ProfileClient client) {
-        validateUser.update(client.getUser());
+        validate.update(client);
         return repository.save(client);
     }
 
     public ProfileClient save(ProfileClient client) {
-        validateUser.update(client.getUser());
+        validate.save(client);
         return repository.save(client);
     }
-
 }
+
