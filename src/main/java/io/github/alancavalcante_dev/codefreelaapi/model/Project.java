@@ -17,7 +17,7 @@ public class Project {
     @Column(name = "id_project")
     private UUID idProject;
 
-    @OneToOne(mappedBy = "idBusinessProjectProfile", optional = false)
+    @OneToOne(mappedBy = "project", optional = false)
     @JoinColumn(name = "id_bussines_project_profile", nullable = false)
     private BusinessProjectProfile idBusinessProjectProfile;
 

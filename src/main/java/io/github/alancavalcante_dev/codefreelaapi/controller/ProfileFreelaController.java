@@ -20,7 +20,7 @@ import java.util.UUID;
 
 
 @RestController
-@RequestMapping("api/profile-freela")
+@RequestMapping("api/profile/freela")
 @RequiredArgsConstructor
 public class ProfileFreelaController {
 

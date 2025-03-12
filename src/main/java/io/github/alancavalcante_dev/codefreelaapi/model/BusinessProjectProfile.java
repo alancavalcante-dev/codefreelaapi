@@ -18,7 +18,7 @@ public class BusinessProjectProfile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id")
+    @Column(name = "id_business_project_profile")
     private UUID idBusinessProjectProfile;
 
     @ManyToOne
@@ -34,6 +34,9 @@ public class BusinessProjectProfile {
     @ManyToOne
     @JoinColumn(name = "id_profile_freela")
     private ProfileFreela profileFreela;
+
+    @OneToOne
+    private Project project;
 
     @Column(name = "confirm_client")
     private boolean confirmClient;

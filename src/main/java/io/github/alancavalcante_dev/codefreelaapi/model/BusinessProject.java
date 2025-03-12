@@ -5,7 +5,9 @@ import io.github.alancavalcante_dev.codefreelaapi.dto.StateBusiness;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Generated;
+import org.springframework.cglib.core.Local;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -17,6 +19,7 @@ import java.util.UUID;
 @Data
 @Table(name = "tbl_business_project")
 @EqualsAndHashCode(of = "idBusinessProject")
+@EntityListeners(AuditingEntityListener.class)
 public class BusinessProject {
 
     @Id
@@ -24,13 +27,13 @@ public class BusinessProject {
     @Column(name = "id_business_project")
     private UUID idBusinessProject;
 
-    @OneToMany(mappedBy = "businessProject", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "businessProject")
     private List<BusinessProjectProfile> profiles = new ArrayList<>();
 
-    @Column(name = "title", length = 50, nullable = false)
+    @Column(name = "title", length = 100, nullable = false)
     private String title;
 
-    @Column(name = "description", length = 50, nullable = false)
+    @Column(name = "description", length = 100, nullable = false)
     private String description;
 
     @Column(name = "price_day", precision = 8, scale = 2)
@@ -45,5 +48,8 @@ public class BusinessProject {
     @Column(name = "state")
     private StateBusiness stateBusiness;
 
+    @CreatedDate
+    @Column(name = "date_created")
+    private LocalDate dateCreated;
 
 }
