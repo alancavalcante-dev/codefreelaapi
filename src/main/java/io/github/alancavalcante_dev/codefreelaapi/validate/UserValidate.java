@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
-// Teste
 @Component
 @RequiredArgsConstructor
 public class UserValidate {
