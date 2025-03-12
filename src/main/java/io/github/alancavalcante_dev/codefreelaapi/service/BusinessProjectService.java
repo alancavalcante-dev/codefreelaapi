@@ -35,6 +35,11 @@ public class BusinessProjectService {
         return this.bussinesProjectRepository.findAll();
     }
 
+    public Optional<BusinessProject> findyByIdBusinessProject(UUID uuid) {
+        return bussinesProjectRepository.findById(uuid);
+    }
+
+
     @Transactional
     public BusinessProject save(BusinessProjectDTO request) throws Exception {
         Optional<ProfileClient> client = clientRepository.findById(UUID.fromString(request.getIdProfileClient()));
@@ -57,5 +62,10 @@ public class BusinessProjectService {
 
         return bussinesProjectRepository.save(project);
 
+    }
+
+    @Transactional
+    public void delete(BusinessProject project) {
+        bussinesProjectRepository.delete(project);
     }
 }

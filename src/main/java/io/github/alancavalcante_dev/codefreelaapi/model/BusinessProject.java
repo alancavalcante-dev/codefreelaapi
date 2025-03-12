@@ -27,7 +27,7 @@ public class BusinessProject {
     @Column(name = "id_business_project")
     private UUID idBusinessProject;
 
-    @OneToMany(mappedBy = "businessProject")
+    @OneToMany(mappedBy = "businessProject", cascade = CascadeType.REMOVE)
     private List<BusinessProjectProfile> profiles = new ArrayList<>();
 
     @Column(name = "title", length = 100, nullable = false)

@@ -7,12 +7,15 @@ import io.github.alancavalcante_dev.codefreelaapi.model.BusinessProject;
 import io.github.alancavalcante_dev.codefreelaapi.service.BusinessProjectService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("api/projects/business")
@@ -49,6 +52,16 @@ public class BusinessProjectController {
 
         return ResponseEntity.created(location).build();
     }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<Object> deleteBusinessProject(@PathVariable("id") String idBusinessProject) {
+        return service.findyByIdBusinessProject(UUID.fromString(idBusinessProject))
+                .map( project -> {
+                    service.delete(project);
+                    return ResponseEntity.noContent().build();
+                }).orElseGet( () -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    }
+
 
 
 
