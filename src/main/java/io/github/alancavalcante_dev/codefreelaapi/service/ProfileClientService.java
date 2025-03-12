@@ -8,6 +8,7 @@ import io.github.alancavalcante_dev.codefreelaapi.repository.AddressRepository;
 import io.github.alancavalcante_dev.codefreelaapi.repository.ProfileClientRepository;
 import io.github.alancavalcante_dev.codefreelaapi.repository.UserRepository;
 import io.github.alancavalcante_dev.codefreelaapi.validate.UserValidate;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +36,7 @@ public class ProfileClientService {
         repository.delete(profileClient);
     }
 
+    @Transactional
     public ProfileClient update(ProfileClient client , User userEntity,Address addressEntity) {
         validate.update(client.getUser());
 
@@ -75,7 +77,7 @@ public class ProfileClientService {
 
 
 
-
+    @Transactional
     public ProfileClient save(ProfileClient client) {
         validate.save(client.getUser());
 
