@@ -39,7 +39,6 @@ public class ProfileFreelaController {
         }
         return ResponseEntity.ok(listProfileFreelaDTO);
     }
-
     @GetMapping("{id}")
     public ResponseEntity<ProfileFreelaResponseDTO> getProfileFreela(@PathVariable("id") String id) {
         return service.getByIdProfileFreela(UUID.fromString(id))
@@ -48,7 +47,7 @@ public class ProfileFreelaController {
     }
 
     @PostMapping
-    public ResponseEntity<ProfileFreelaInsertRequestDTO> postProfileClient(@RequestBody @Valid ProfileFreelaInsertRequestDTO freela ) {
+    public ResponseEntity<ProfileFreelaInsertRequestDTO> postProfileFreela(@RequestBody @Valid ProfileFreelaInsertRequestDTO freela ) {
         ProfileFreela entity = mapper.toEntity(freela);
         service.save(entity);
 
@@ -68,9 +67,7 @@ public class ProfileFreelaController {
                 .map(p -> {
                     ProfileFreela entity = mapper.toEntityUpdate(profileFreelaUpdateResponseDTO);
                     entity.setIdFreela(p.getIdFreela());
-                    entity.setUsername(p.getUsername());
-                    entity.setPassword(p.getPassword());
-                    service.update(entity, p.getAddress().getIdAddress());
+                    service.update(entity, p.getUser(), p.getAddress());
                     return ResponseEntity.ok(mapper.toResponseDTO(entity));
                 }).orElseGet(() -> ResponseEntity.notFound().build());
     }

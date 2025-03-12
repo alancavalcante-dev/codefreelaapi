@@ -65,9 +65,7 @@ public class ProfileClientController {
                 .map(p -> {
                     ProfileClient entity = mapper.toEntityUpdate(profileClientUpdateResponseDTO);
                     entity.setIdClient(p.getIdClient());
-                    entity.setUsername(p.getUsername());
-                    entity.setPassword(p.getPassword());
-                    service.update(entity, p.getAddress().getIdAddress());
+                    service.update(entity, p.getUser(), p.getAddress());
                     return ResponseEntity.ok(mapper.toResponseDTO(entity));
                 }).orElseGet(() -> ResponseEntity.notFound().build());
     }

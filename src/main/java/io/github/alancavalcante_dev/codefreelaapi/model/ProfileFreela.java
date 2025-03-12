@@ -23,12 +23,6 @@ public class ProfileFreela {
     @Column(name = "id_profile_freela")
     private UUID idFreela;
 
-    @Column(length = 20, nullable = false, unique = true)
-    private String username;
-
-    @Column(length = 20, nullable = false)
-    private String password;
-
     @Column(length = 100, nullable = false)
     private String name;
 
@@ -41,10 +35,6 @@ public class ProfileFreela {
     @Column(length = 11, nullable = false, unique = true)
     private String cpf;
 
-    @OneToOne
-    @JoinColumn(name = "id_address")
-    private Address address;
-
     @Column(nullable = false)
     private boolean isPj;
 
@@ -54,5 +44,15 @@ public class ProfileFreela {
 
     @LastModifiedDate
     private LocalDateTime dateLastModify;
+
+    @OneToOne
+    @JoinColumn(name = "id_address")
+    private Address address;
+
+    @OneToOne
+    @JoinColumn(name = "id_user")
+    private User user;
+
+
 }
 

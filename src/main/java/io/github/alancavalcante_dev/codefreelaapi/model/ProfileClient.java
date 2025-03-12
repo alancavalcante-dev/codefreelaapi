@@ -21,12 +21,6 @@ public class ProfileClient {
     @Column(name = "id_profile_client")
     private UUID idClient;
 
-    @Column(length = 20, nullable = false, unique = true)
-    private String username;
-
-    @Column(length = 20, nullable = false)
-    private String password;
-
     @Column(length = 100, nullable = false)
     private String name;
 
@@ -39,10 +33,6 @@ public class ProfileClient {
     @Column(length = 11, nullable = false, unique = true)
     private String cpf;
 
-    @OneToOne
-    @JoinColumn(name = "id_address")
-    private Address address;
-
     @Column(nullable = false)
     private boolean isPj;
 
@@ -52,4 +42,13 @@ public class ProfileClient {
 
     @LastModifiedDate
     private LocalDateTime dateLastModify;
+
+    @OneToOne
+    @JoinColumn(name = "id_address")
+    private Address address;
+
+    @OneToOne
+    @JoinColumn(name = "id_user")
+    private User user;
+
 }

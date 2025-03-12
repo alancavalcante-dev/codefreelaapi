@@ -1,6 +1,9 @@
 package io.github.alancavalcante_dev.codefreelaapi.dto.client;
 
+import io.github.alancavalcante_dev.codefreelaapi.dto.AddressDTO;
+import io.github.alancavalcante_dev.codefreelaapi.dto.user.UserRequestDTO;
 import io.github.alancavalcante_dev.codefreelaapi.model.Address;
+import io.github.alancavalcante_dev.codefreelaapi.model.User;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -34,5 +37,6 @@ public class ProfileClientUpdateRequestDTO {
     @NotNull(message = "Tem que definir se é Pessoa Juridica ou não.")
     boolean isPj;
 
-    Address address;
+    AddressDTO address;
+    UserRequestDTO user;
 }

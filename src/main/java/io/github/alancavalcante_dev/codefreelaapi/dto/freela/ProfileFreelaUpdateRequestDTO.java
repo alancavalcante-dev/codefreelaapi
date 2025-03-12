@@ -1,5 +1,7 @@
 package io.github.alancavalcante_dev.codefreelaapi.dto.freela;
 
+import io.github.alancavalcante_dev.codefreelaapi.dto.AddressDTO;
+import io.github.alancavalcante_dev.codefreelaapi.dto.user.UserRequestDTO;
 import io.github.alancavalcante_dev.codefreelaapi.model.Address;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -35,5 +37,6 @@ public class ProfileFreelaUpdateRequestDTO {
     @NotNull(message = "Tem que definir se é Pessoa Juridica ou não.")
     boolean isPj;
 
-    Address address;
+    AddressDTO address;
+    UserRequestDTO user;
 }

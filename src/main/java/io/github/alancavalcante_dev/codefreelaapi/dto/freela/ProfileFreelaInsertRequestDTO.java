@@ -1,5 +1,7 @@
 package io.github.alancavalcante_dev.codefreelaapi.dto.freela;
 
+import io.github.alancavalcante_dev.codefreelaapi.dto.AddressDTO;
+import io.github.alancavalcante_dev.codefreelaapi.dto.user.UserRequestDTO;
 import io.github.alancavalcante_dev.codefreelaapi.model.Address;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -12,16 +14,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ProfileFreelaInsertRequestDTO {
-
-    @NotNull
-    @NotBlank
-    @Size(min = 2, message = "Username: Mínimo de 2 caracteres e máximo de 20 caracteres", max = 20)
-    String username;
-
-    @NotNull
-    @NotBlank
-    @Size(min = 2, message = "Senha: Mínimo de 2 caracteres e máximo de 20 caracteres", max = 20)
-    String password;
 
 
     @NotNull
@@ -46,6 +38,7 @@ public class ProfileFreelaInsertRequestDTO {
     @NotNull(message = "Tem que definir se é Pessoa Juridica ou não.")
     boolean isPj;
 
-    Address address;
+    AddressDTO address;
+    UserRequestDTO user;
 
 }
