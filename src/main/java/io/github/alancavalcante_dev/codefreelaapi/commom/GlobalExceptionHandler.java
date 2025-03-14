@@ -1,10 +1,7 @@
 package io.github.alancavalcante_dev.codefreelaapi.commom;
 
 import io.github.alancavalcante_dev.codefreelaapi.dto.GlobalExceptionDTO;
-import io.github.alancavalcante_dev.codefreelaapi.exceptions.CpfExistsException;
-import io.github.alancavalcante_dev.codefreelaapi.exceptions.CurrentDateGreaterThanProjectDate;
-import io.github.alancavalcante_dev.codefreelaapi.exceptions.EmailExistsException;
-import io.github.alancavalcante_dev.codefreelaapi.exceptions.UsernameDuplicadoExeption;
+import io.github.alancavalcante_dev.codefreelaapi.exceptions.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -56,8 +53,8 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(exeption.getStatus()).body(exeption);
     }
 
-    @ExceptionHandler(EmailExistsException.class)
-    public ResponseEntity<GlobalExceptionDTO> handlerSomeValueMustBeFilled(EmailExistsException ex) {
+    @ExceptionHandler(SomeValueMustBeFilled.class)
+    public ResponseEntity<GlobalExceptionDTO> handlerSomeValueMustBeFilled(SomeValueMustBeFilled ex) {
         GlobalExceptionDTO exeption = Error.noPriceField(
                 "Nenhum campo de preço preenchido", HttpStatus.BAD_REQUEST.value(), List.of(ex.getMessage()));
         return ResponseEntity.status(exeption.getStatus()).body(exeption);
