@@ -1,8 +1,8 @@
 package io.github.alancavalcante_dev.codefreelaapi.service;
 
 
-import io.github.alancavalcante_dev.codefreelaapi.dto.businesproject.BusinessProjectDTO;
 import io.github.alancavalcante_dev.codefreelaapi.dto.StateBusiness;
+import io.github.alancavalcante_dev.codefreelaapi.dto.businesproject.BusinessProjectInsertDTO;
 import io.github.alancavalcante_dev.codefreelaapi.model.BusinessProject;
 import io.github.alancavalcante_dev.codefreelaapi.model.BusinessProjectProfile;
 import io.github.alancavalcante_dev.codefreelaapi.model.ProfileClient;
@@ -41,7 +41,7 @@ public class BusinessProjectService {
 
 
     @Transactional
-    public BusinessProject save(BusinessProjectDTO request) throws Exception {
+    public BusinessProject save(BusinessProjectInsertDTO request) throws Exception {
         Optional<ProfileClient> client = clientRepository.findById(UUID.fromString(request.getIdProfileClient()));
         if (client.isEmpty()) { throw new Exception("Perfil não encontrado");}
 
@@ -64,7 +64,10 @@ public class BusinessProjectService {
 
     }
 
-    @Transactional
+    public BusinessProject update(BusinessProject project) {
+        return bussinesProjectRepository.save(project);
+    }
+
     public void delete(BusinessProject project) {
         bussinesProjectRepository.delete(project);
     }

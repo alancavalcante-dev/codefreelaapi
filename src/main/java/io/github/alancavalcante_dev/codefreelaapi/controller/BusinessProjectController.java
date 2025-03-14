@@ -1,8 +1,9 @@
 package io.github.alancavalcante_dev.codefreelaapi.controller;
 
 
-import io.github.alancavalcante_dev.codefreelaapi.dto.businesproject.BusinessProjectDTO;
+import io.github.alancavalcante_dev.codefreelaapi.dto.businesproject.BusinessProjectInsertDTO;
 import io.github.alancavalcante_dev.codefreelaapi.dto.businesproject.BusinessProjectResponseDTO;
+import io.github.alancavalcante_dev.codefreelaapi.dto.businesproject.BusinessProjectUpdateDTO;
 import io.github.alancavalcante_dev.codefreelaapi.model.BusinessProject;
 import io.github.alancavalcante_dev.codefreelaapi.service.BusinessProjectService;
 import jakarta.validation.Valid;
@@ -14,7 +15,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -44,8 +45,50 @@ public class BusinessProjectController {
         return ResponseEntity.ok(listDTO);
     }
 
+
+    @GetMapping("{id}")
+    public ResponseEntity<BusinessProjectResponseDTO> getIdBusinessProject(@PathVariable("id") String id) {
+        Optional<BusinessProject> projectOptional = service.findyByIdBusinessProject(UUID.fromString(id));
+        if (projectOptional.isEmpty()) { return ResponseEntity.notFound().build(); }
+
+        BusinessProject project = projectOptional.get();
+
+        BusinessProjectResponseDTO dto = new BusinessProjectResponseDTO(
+                id,
+                project.getTitle(),
+                project.getDescription(),
+                project.getPriceDay(),
+                project.getPriceHour(),
+                project.getClosingDate(),
+                project.getStateBusiness()
+        );
+
+        return ResponseEntity.ok(dto);
+    }
+
+
+
+    @PutMapping("{id}")
+    public ResponseEntity<Object> updateBusinessProject(
+            @PathVariable("id") String id,
+            @RequestBody @Valid BusinessProjectUpdateDTO request
+    ) {
+        Optional<BusinessProject> businessOptional = service.findyByIdBusinessProject(UUID.fromString(id));
+        if (businessOptional.isEmpty()) { return ResponseEntity.notFound().build(); }
+
+        BusinessProject project = businessOptional.get();
+        project.setTitle(request.getTitle());
+        project.setDescription(request.getDescription());
+        project.setPriceDay(request.getPriceDay());
+        project.setPriceHour(request.getPriceHour());
+
+        service.update(project);
+        return ResponseEntity.ok().build();
+    }
+
+
     @PostMapping
-    public ResponseEntity<BusinessProjectDTO> postBusinessProject(@RequestBody @Valid BusinessProjectDTO request) throws Exception {
+    public ResponseEntity<BusinessProjectInsertDTO> postBusinessProject(@RequestBody @Valid BusinessProjectInsertDTO request) throws Exception {
         BusinessProject business = service.save(request);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().
                 path("/{id}").buildAndExpand(business.getIdBusinessProject()).toUri();
@@ -61,13 +104,4 @@ public class BusinessProjectController {
                     return ResponseEntity.noContent().build();
                 }).orElseGet( () -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
-
-
-
-
-
-
-
-
-
 }
