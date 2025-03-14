@@ -24,7 +24,7 @@ public class Profile {
     @Column(length = 100, nullable = false)
     private String name;
 
-    @Column(length = 100, nullable = false)
+    @Column(length = 100, nullable = false, unique = true)
     private String email;
 
     @Column(length = 13)
@@ -47,7 +47,7 @@ public class Profile {
     @JoinColumn(name = "id_address")
     private Address address;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "id_user")
     private User user;
 

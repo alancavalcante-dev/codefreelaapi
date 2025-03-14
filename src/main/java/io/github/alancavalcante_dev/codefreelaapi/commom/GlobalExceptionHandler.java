@@ -1,6 +1,8 @@
 package io.github.alancavalcante_dev.codefreelaapi.commom;
 
 import io.github.alancavalcante_dev.codefreelaapi.dto.GlobalExceptionDTO;
+import io.github.alancavalcante_dev.codefreelaapi.exceptions.CpfExistsException;
+import io.github.alancavalcante_dev.codefreelaapi.exceptions.EmailExistsException;
 import io.github.alancavalcante_dev.codefreelaapi.exceptions.UsernameDuplicadoExeption;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,10 +15,10 @@ import java.util.List;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<GlobalExceptionDTO> handleGenericException(Exception ex) {
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<GlobalExceptionDTO> handleGenericException(RuntimeException ex) {
         GlobalExceptionDTO exeption = Error.defaultError(
-                "Aconteceu um erro, entre em contato com o Administrador!", HttpStatus.BAD_REQUEST.value(), List.of());
+                "Aconteceu um erro, entre em contato com o Administrador!", HttpStatus.INTERNAL_SERVER_ERROR.value(), List.of(ex.getMessage()));
         return ResponseEntity.status(exeption.getStatus()).body(exeption);
     }
 
@@ -36,6 +38,20 @@ public class GlobalExceptionHandler {
     public ResponseEntity<GlobalExceptionDTO> handleUsernameDuplicateException(UsernameDuplicadoExeption ex) {
         GlobalExceptionDTO exeption = Error.usernameDuplicate(
                 "Username duplicado", HttpStatus.CONFLICT.value(), List.of(ex.getMessage()));
+        return ResponseEntity.status(exeption.getStatus()).body(exeption);
+    }
+
+    @ExceptionHandler(CpfExistsException.class)
+    public ResponseEntity<GlobalExceptionDTO> handlerCpfExistsException(CpfExistsException ex) {
+        GlobalExceptionDTO exeption = Error.usernameDuplicate(
+                "CPF já existente", HttpStatus.CONFLICT.value(), List.of(ex.getMessage()));
+        return ResponseEntity.status(exeption.getStatus()).body(exeption);
+    }
+
+    @ExceptionHandler(EmailExistsException.class)
+    public ResponseEntity<GlobalExceptionDTO> handlerEmailExistsException(EmailExistsException ex) {
+        GlobalExceptionDTO exeption = Error.usernameDuplicate(
+                "Email já existente", HttpStatus.CONFLICT.value(), List.of(ex.getMessage()));
         return ResponseEntity.status(exeption.getStatus()).body(exeption);
     }
 

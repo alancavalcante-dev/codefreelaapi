@@ -7,6 +7,7 @@ import io.github.alancavalcante_dev.codefreelaapi.model.User;
 import io.github.alancavalcante_dev.codefreelaapi.repository.AddressRepository;
 import io.github.alancavalcante_dev.codefreelaapi.repository.ProfileRepository;
 import io.github.alancavalcante_dev.codefreelaapi.repository.UserRepository;
+import io.github.alancavalcante_dev.codefreelaapi.validate.ProfileValidate;
 import io.github.alancavalcante_dev.codefreelaapi.validate.UserValidate;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -22,8 +23,10 @@ public class ProfileService {
 
     private final ProfileRepository repository;
     private final UserRepository userRepository;
-    private final UserValidate validate;
     private final AddressRepository addressRepository;
+
+    private final UserValidate userValidate;
+    private final ProfileValidate profileValidate;
 
 
     public List<Profile> getAllProfiles() {
@@ -38,7 +41,7 @@ public class ProfileService {
 
     @Transactional
     public Profile update(Profile profile , User userEntity, Address addressEntity) {
-        validate.update(profile.getUser());
+        userValidate.update(profile.getUser());
 
         User userProfile = profile.getUser();
         Address addressProfile = profile.getAddress();
@@ -79,7 +82,8 @@ public class ProfileService {
 
     @Transactional
     public Profile save(Profile profile) {
-        validate.save(profile.getUser());
+        userValidate.save(profile.getUser());
+        profileValidate.save(profile);
 
         User userSave = userRepository.save(profile.getUser());
         Address addressSave = addressRepository.save(profile.getAddress());
