@@ -17,4 +17,9 @@ public class Error {
         return new GlobalExceptionDTO(message, status, errors);
     }
 
+    public static GlobalExceptionDTO noPriceField(String message, int status, List<String> errors) {
+        return new GlobalExceptionDTO(message, status, errors);
+    }
+
+
 }

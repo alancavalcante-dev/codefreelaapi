@@ -9,6 +9,7 @@ import io.github.alancavalcante_dev.codefreelaapi.model.Profile;
 import io.github.alancavalcante_dev.codefreelaapi.repository.BusinessProjectProfileRepository;
 import io.github.alancavalcante_dev.codefreelaapi.repository.BusinessProjectRepository;
 import io.github.alancavalcante_dev.codefreelaapi.repository.ProfileRepository;
+import io.github.alancavalcante_dev.codefreelaapi.validate.BusinessProjectValidate;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,10 +26,10 @@ public class BusinessProjectService {
     private BusinessProjectRepository bussinesProjectRepository;
 
     @Autowired
-    private BusinessProjectProfileRepository businessProjectProfileRepository;
+    private BusinessProjectValidate businessProjectValidate;
 
     @Autowired
-    private ProfileRepository clientRepository;
+    private ProfileRepository profileRepository;
 
 
     public List<BusinessProject> getAllBusinessProject() {
@@ -42,16 +43,20 @@ public class BusinessProjectService {
 
     @Transactional
     public BusinessProject save(BusinessProjectInsertDTO request) throws Exception {
-        Optional<Profile> client = clientRepository.findById(UUID.fromString(request.getIdProfile()));
+        Optional<Profile> client = profileRepository.findById(UUID.fromString(request.getIdProfile()));
         if (client.isEmpty()) { throw new Exception("Perfil não encontrado");}
 
         BusinessProject project = new BusinessProject();
         project.setTitle(request.getTitle());
         project.setDescription(request.getDescription());
+        project.setTags(request.getTags());
         project.setPriceDay(request.getPriceDay());
         project.setPriceHour(request.getPriceHour());
+        project.setPriceProject(request.getPriceProject());
         project.setClosingDate(request.getClosingDate());
         project.setStateBusiness(StateBusiness.Open);
+
+        businessProjectValidate.save(project);
 
         BusinessProject projectSave = bussinesProjectRepository.save(project);
 

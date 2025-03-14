@@ -36,11 +36,17 @@ public class BusinessProject {
     @Column(name = "description", length = 100, nullable = false)
     private String description;
 
+    @Column(name = "tags")
+    private List<String> tags;
+
     @Column(name = "price_day", precision = 8, scale = 2)
     private BigDecimal priceDay;
 
     @Column(name = "price_hour", precision = 8, scale = 2)
     private BigDecimal priceHour;
+
+    @Column(name = "price_project", precision = 8, scale = 2)
+    private BigDecimal priceProject;
 
     @Column(name = "closing_date")
     private LocalDate closingDate;

@@ -1,8 +1,8 @@
 package io.github.alancavalcante_dev.codefreelaapi.mapperstruct;
 
-import io.github.alancavalcante_dev.codefreelaapi.dto.client.ProfileInsertRequestDTO;
-import io.github.alancavalcante_dev.codefreelaapi.dto.client.ProfileResponseDTO;
-import io.github.alancavalcante_dev.codefreelaapi.dto.client.ProfileUpdateRequestDTO;
+import io.github.alancavalcante_dev.codefreelaapi.dto.profile.ProfileInsertRequestDTO;
+import io.github.alancavalcante_dev.codefreelaapi.dto.profile.ProfileResponseDTO;
+import io.github.alancavalcante_dev.codefreelaapi.dto.profile.ProfileUpdateRequestDTO;
 import io.github.alancavalcante_dev.codefreelaapi.model.Profile;
 import org.mapstruct.Mapper;
 

@@ -7,6 +7,7 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -18,19 +19,21 @@ public class BusinessProjectInsertDTO {
 
     @NotNull
     @NotBlank
-    @Size(min=2, message = "Erro", max = 100)
+    @Size(min=2, message = "Title: Tem que ter no minímo de 2 caracteres e no máximo de 100 caracteres", max = 100)
     String title;
 
     @NotNull
     @NotBlank
-    @Size(min=2, message = "Erro", max = 100)
+    @Size(min=2, message = "Description: Tem que ter no minímo de 2 caracteres e no máximo de 100 caracteres", max = 100)
     String description;
 
-    @NotNull
+    List<String> tags;
+
     BigDecimal priceDay;
 
-    @NotNull
     BigDecimal priceHour;
+
+    BigDecimal priceProject;
 
     @NotNull
     LocalDate closingDate;

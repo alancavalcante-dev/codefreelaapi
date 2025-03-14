@@ -2,6 +2,7 @@ package io.github.alancavalcante_dev.codefreelaapi.commom;
 
 import io.github.alancavalcante_dev.codefreelaapi.dto.GlobalExceptionDTO;
 import io.github.alancavalcante_dev.codefreelaapi.exceptions.CpfExistsException;
+import io.github.alancavalcante_dev.codefreelaapi.exceptions.CurrentDateGreaterThanProjectDate;
 import io.github.alancavalcante_dev.codefreelaapi.exceptions.EmailExistsException;
 import io.github.alancavalcante_dev.codefreelaapi.exceptions.UsernameDuplicadoExeption;
 import org.springframework.http.HttpStatus;
@@ -54,6 +55,21 @@ public class GlobalExceptionHandler {
                 "Email já existente", HttpStatus.CONFLICT.value(), List.of(ex.getMessage()));
         return ResponseEntity.status(exeption.getStatus()).body(exeption);
     }
+
+    @ExceptionHandler(EmailExistsException.class)
+    public ResponseEntity<GlobalExceptionDTO> handlerSomeValueMustBeFilled(EmailExistsException ex) {
+        GlobalExceptionDTO exeption = Error.noPriceField(
+                "Nenhum campo de preço preenchido", HttpStatus.BAD_REQUEST.value(), List.of(ex.getMessage()));
+        return ResponseEntity.status(exeption.getStatus()).body(exeption);
+    }
+
+    @ExceptionHandler(CurrentDateGreaterThanProjectDate.class)
+    public ResponseEntity<GlobalExceptionDTO> handlerCurrentDateGreaterThanProjectDate(CurrentDateGreaterThanProjectDate ex) {
+        GlobalExceptionDTO exeption = Error.defaultError(
+                "Data do projeto menor que a data atual", HttpStatus.BAD_REQUEST.value(), List.of());
+        return ResponseEntity.status(exeption.getStatus()).body(exeption);
+    }
+
 
 }
 

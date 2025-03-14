@@ -1,4 +1,4 @@
-package io.github.alancavalcante_dev.codefreelaapi.dto.client;
+package io.github.alancavalcante_dev.codefreelaapi.dto.profile;
 
 import io.github.alancavalcante_dev.codefreelaapi.dto.AddressDTO;
 import io.github.alancavalcante_dev.codefreelaapi.dto.user.UserRequestDTO;
