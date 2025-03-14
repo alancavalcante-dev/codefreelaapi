@@ -13,6 +13,13 @@ import java.util.List;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<GlobalExceptionDTO> handleGenericException(Exception ex) {
+        GlobalExceptionDTO exeption = Error.defaultError(
+                "Aconteceu um erro, entre em contato com o Administrador!", HttpStatus.BAD_REQUEST.value(), List.of());
+        return ResponseEntity.status(exeption.getStatus()).body(exeption);
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<GlobalExceptionDTO> handleValidationException(MethodArgumentNotValidException ex) {
         List<String> errors = ex.getBindingResult()

@@ -6,12 +6,15 @@ import java.util.List;
 
 public class Error {
 
+    public static GlobalExceptionDTO defaultError(String message, int status, List<String> errors) {
+        return new GlobalExceptionDTO(message, status, errors);
+    }
 
     public static GlobalExceptionDTO fieldErrors(String message, int status, List<String> errors) {
         return new GlobalExceptionDTO(message, status, errors);
     }
-    public static GlobalExceptionDTO usernameDuplicate(String message, int status, List<String> error) {
-        return new GlobalExceptionDTO(message, status, error);
+    public static GlobalExceptionDTO usernameDuplicate(String message, int status, List<String> errors) {
+        return new GlobalExceptionDTO(message, status, errors);
     }
 
 }
