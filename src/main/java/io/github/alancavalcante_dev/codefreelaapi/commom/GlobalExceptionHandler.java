@@ -26,10 +26,10 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(UsernameDuplicadoExeption.class)
-    public ResponseEntity<String> handleUsernameDuplicadoExeption(UsernameDuplicadoExeption ex) {
-        return ResponseEntity
-                .status(HttpStatus.CONFLICT)
-                .body("Erro: " + ex.getMessage());
+    public ResponseEntity<GlobalExceptionDTO> handleUsernameDuplicadoExeption(UsernameDuplicadoExeption ex) {
+        GlobalExceptionDTO exeption = Error.usernameDuplicate(
+                "Username duplicado", HttpStatus.CONFLICT.value(), List.of(ex.getMessage()));
+        return ResponseEntity.status(exeption.getStatus()).body(exeption);
     }
 
 }

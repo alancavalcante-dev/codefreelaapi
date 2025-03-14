@@ -2,6 +2,7 @@ package io.github.alancavalcante_dev.codefreelaapi.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 

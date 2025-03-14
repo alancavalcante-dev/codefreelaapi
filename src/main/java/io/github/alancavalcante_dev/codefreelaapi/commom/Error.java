@@ -10,4 +10,8 @@ public class Error {
     public static GlobalExceptionDTO fieldErrors(String message, int status, List<String> errors) {
         return new GlobalExceptionDTO(message, status, errors);
     }
+    public static GlobalExceptionDTO usernameDuplicate(String message, int status, List<String> error) {
+        return new GlobalExceptionDTO(message, status, error);
+    }
+
 }
