@@ -10,18 +10,16 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-
-
 @Entity
-@Table(name = "tbl_profile_freela")
+@Table(name = "tbl_profile")
 @Data
 @EntityListeners(AuditingEntityListener.class)
-public class ProfileFreela {
+public class Profile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id_profile_freela")
-    private UUID idFreela;
+    @Column(name = "id_profile")
+    private UUID idProfile;
 
     @Column(length = 100, nullable = false)
     private String name;
@@ -53,6 +51,4 @@ public class ProfileFreela {
     @JoinColumn(name = "id_user")
     private User user;
 
-
 }
-

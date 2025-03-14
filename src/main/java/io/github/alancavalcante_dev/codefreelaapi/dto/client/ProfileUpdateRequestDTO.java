@@ -1,8 +1,7 @@
-package io.github.alancavalcante_dev.codefreelaapi.dto.freela;
+package io.github.alancavalcante_dev.codefreelaapi.dto.client;
 
 import io.github.alancavalcante_dev.codefreelaapi.dto.AddressDTO;
 import io.github.alancavalcante_dev.codefreelaapi.dto.user.UserRequestDTO;
-import io.github.alancavalcante_dev.codefreelaapi.model.Address;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -10,11 +9,9 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
-
 @Getter
 @Setter
-public class ProfileFreelaInsertRequestDTO {
-
+public class ProfileUpdateRequestDTO {
 
     @NotNull
     @NotBlank
@@ -40,5 +37,4 @@ public class ProfileFreelaInsertRequestDTO {
 
     AddressDTO address;
     UserRequestDTO user;
-
 }

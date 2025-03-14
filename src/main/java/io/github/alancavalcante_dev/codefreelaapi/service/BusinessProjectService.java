@@ -5,10 +5,10 @@ import io.github.alancavalcante_dev.codefreelaapi.dto.StateBusiness;
 import io.github.alancavalcante_dev.codefreelaapi.dto.businesproject.BusinessProjectInsertDTO;
 import io.github.alancavalcante_dev.codefreelaapi.model.BusinessProject;
 import io.github.alancavalcante_dev.codefreelaapi.model.BusinessProjectProfile;
-import io.github.alancavalcante_dev.codefreelaapi.model.ProfileClient;
+import io.github.alancavalcante_dev.codefreelaapi.model.Profile;
 import io.github.alancavalcante_dev.codefreelaapi.repository.BusinessProjectProfileRepository;
 import io.github.alancavalcante_dev.codefreelaapi.repository.BusinessProjectRepository;
-import io.github.alancavalcante_dev.codefreelaapi.repository.ProfileClientRepository;
+import io.github.alancavalcante_dev.codefreelaapi.repository.ProfileRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,7 +28,7 @@ public class BusinessProjectService {
     private BusinessProjectProfileRepository businessProjectProfileRepository;
 
     @Autowired
-    private ProfileClientRepository clientRepository;
+    private ProfileRepository clientRepository;
 
 
     public List<BusinessProject> getAllBusinessProject() {
@@ -42,7 +42,7 @@ public class BusinessProjectService {
 
     @Transactional
     public BusinessProject save(BusinessProjectInsertDTO request) throws Exception {
-        Optional<ProfileClient> client = clientRepository.findById(UUID.fromString(request.getIdProfileClient()));
+        Optional<Profile> client = clientRepository.findById(UUID.fromString(request.getIdProfile()));
         if (client.isEmpty()) { throw new Exception("Perfil não encontrado");}
 
         BusinessProject project = new BusinessProject();
@@ -57,7 +57,7 @@ public class BusinessProjectService {
 
         BusinessProjectProfile profile = new BusinessProjectProfile();
         profile.setBusinessProject(projectSave);
-        profile.setProfileClient(client.get());
+        profile.setProfile(client.get());
         projectSave.getProfiles().add(profile);
 
         return bussinesProjectRepository.save(project);

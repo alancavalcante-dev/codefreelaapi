@@ -3,11 +3,8 @@ package io.github.alancavalcante_dev.codefreelaapi.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -26,14 +23,11 @@ public class BusinessProjectProfile {
     private BusinessProject businessProject;
 
     @ManyToOne
-    @JoinColumn(name = "id_profile_client", nullable = false)
-    private ProfileClient profileClient;
+    @JoinColumn(name = "id_profile", nullable = false)
+    private Profile profile;
 
     // Opcional
     // Apos cliente e dev confirmarem projetos, para o resto vira state Finished e para os negociadores, fica Open.
-    @ManyToOne
-    @JoinColumn(name = "id_profile_freela")
-    private ProfileFreela profileFreela;
 
     @OneToOne
     private Project project;

@@ -3,15 +3,13 @@ package io.github.alancavalcante_dev.codefreelaapi.dto.client;
 
 import io.github.alancavalcante_dev.codefreelaapi.dto.AddressDTO;
 import io.github.alancavalcante_dev.codefreelaapi.dto.user.UserRequestDTO;
-import io.github.alancavalcante_dev.codefreelaapi.model.Address;
-import io.github.alancavalcante_dev.codefreelaapi.model.User;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class ProfileClientInsertRequestDTO {
+public class ProfileInsertRequestDTO {
 
     @NotNull
     @NotBlank

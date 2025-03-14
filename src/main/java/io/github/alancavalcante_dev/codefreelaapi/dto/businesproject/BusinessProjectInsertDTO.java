@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class BusinessProjectInsertDTO {
 
-    String idProfileClient;
+    String idProfile;
 
     @NotNull
     @NotBlank

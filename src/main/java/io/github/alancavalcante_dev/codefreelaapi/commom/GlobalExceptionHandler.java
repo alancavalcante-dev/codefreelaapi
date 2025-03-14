@@ -26,7 +26,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(UsernameDuplicadoExeption.class)
-    public ResponseEntity<GlobalExceptionDTO> handleUsernameDuplicadoExeption(UsernameDuplicadoExeption ex) {
+    public ResponseEntity<GlobalExceptionDTO> handleUsernameDuplicateException(UsernameDuplicadoExeption ex) {
         GlobalExceptionDTO exeption = Error.usernameDuplicate(
                 "Username duplicado", HttpStatus.CONFLICT.value(), List.of(ex.getMessage()));
         return ResponseEntity.status(exeption.getStatus()).body(exeption);
