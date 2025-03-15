@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -22,11 +23,13 @@ public class BusinessProjectUpdateDTO {
     @Size(min=2, message = "Erro", max = 100)
     String description;
 
-    @NotNull
+    List<String> tags;
+
     BigDecimal priceDay;
 
-    @NotNull
     BigDecimal priceHour;
+
+    BigDecimal priceProject;
 
     @NotNull
     LocalDate closingDate;

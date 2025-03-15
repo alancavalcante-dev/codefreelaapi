@@ -5,6 +5,7 @@ import io.github.alancavalcante_dev.codefreelaapi.dto.StateBusiness;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.springframework.cglib.core.Local;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -19,6 +20,7 @@ import java.util.UUID;
 @Data
 @Table(name = "tbl_business_project")
 @EqualsAndHashCode(of = "idBusinessProject")
+@ToString
 @EntityListeners(AuditingEntityListener.class)
 public class BusinessProject {
 

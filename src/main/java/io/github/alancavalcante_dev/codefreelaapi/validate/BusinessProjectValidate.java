@@ -13,16 +13,21 @@ import java.time.LocalDate;
 public class BusinessProjectValidate {
 
     public void fieldsPrice(BusinessProject project) {
-        boolean priceDay = project.getPriceDay().compareTo(BigDecimal.ZERO) > 0;
-        boolean priceHour = project.getPriceHour().compareTo(BigDecimal.ZERO) > 0;
-        boolean priceProject = project.getPriceProject().compareTo(BigDecimal.ZERO) > 0;
+        BigDecimal priceDay = project.getPriceDay() != null ? project.getPriceDay() : BigDecimal.ZERO;
+        BigDecimal priceHour = project.getPriceHour() != null ? project.getPriceHour() : BigDecimal.ZERO;
+        BigDecimal priceProject = project.getPriceProject() != null ? project.getPriceProject() : BigDecimal.ZERO;
 
-        if (!(priceDay || priceHour || priceProject)) {
+        boolean priceDayValid = priceDay.compareTo(BigDecimal.ZERO) > 0;
+        boolean priceHourValid = priceHour.compareTo(BigDecimal.ZERO) > 0;
+        boolean priceProjectValid = priceProject.compareTo(BigDecimal.ZERO) > 0;
+
+        if (!(priceDayValid || priceHourValid || priceProjectValid)) {
             throw new SomeValueMustBeFilled(
                     "Algum valor deve ser preenchido em algum tipo de preço: Preço por dia, Preço por Hora, Preço por projeto"
             );
         }
     }
+
 
     public void verifyFieldDateClosing(LocalDate date) {
         LocalDate dateCurrent = LocalDate.now();

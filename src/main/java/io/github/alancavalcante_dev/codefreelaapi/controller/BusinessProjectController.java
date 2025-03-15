@@ -4,6 +4,7 @@ package io.github.alancavalcante_dev.codefreelaapi.controller;
 import io.github.alancavalcante_dev.codefreelaapi.dto.businesproject.BusinessProjectInsertDTO;
 import io.github.alancavalcante_dev.codefreelaapi.dto.businesproject.BusinessProjectResponseDTO;
 import io.github.alancavalcante_dev.codefreelaapi.dto.businesproject.BusinessProjectUpdateDTO;
+import io.github.alancavalcante_dev.codefreelaapi.mapperstruct.BusinessProjectMapper;
 import io.github.alancavalcante_dev.codefreelaapi.model.BusinessProject;
 import io.github.alancavalcante_dev.codefreelaapi.service.BusinessProjectService;
 import jakarta.validation.Valid;
@@ -25,19 +26,14 @@ public class BusinessProjectController {
     @Autowired
     private BusinessProjectService service;
 
+    @Autowired
+    private BusinessProjectMapper mapper;
+
 
     @GetMapping
     public ResponseEntity<List<BusinessProjectResponseDTO>> getAllBusinessProject() {
         List<BusinessProjectResponseDTO> listDTO = service.getAllBusinessProject()
-                .stream().map( bP -> new BusinessProjectResponseDTO(
-                        bP.getIdBusinessProject().toString(),
-                        bP.getTitle(),
-                        bP.getDescription(),
-                        bP.getPriceDay(),
-                        bP.getPriceDay(),
-                        bP.getClosingDate(),
-                        bP.getStateBusiness()
-                )).toList();
+                .stream().map( project -> mapper.entityToResponse(project)).toList();
 
         if(listDTO.isEmpty()) {
             return ResponseEntity.noContent().build();
@@ -52,16 +48,7 @@ public class BusinessProjectController {
         if (projectOptional.isEmpty()) { return ResponseEntity.notFound().build(); }
 
         BusinessProject project = projectOptional.get();
-
-        BusinessProjectResponseDTO dto = new BusinessProjectResponseDTO(
-                id,
-                project.getTitle(),
-                project.getDescription(),
-                project.getPriceDay(),
-                project.getPriceHour(),
-                project.getClosingDate(),
-                project.getStateBusiness()
-        );
+        BusinessProjectResponseDTO dto = mapper.entityToResponse(project);
 
         return ResponseEntity.ok(dto);
     }
@@ -79,8 +66,10 @@ public class BusinessProjectController {
         BusinessProject project = businessOptional.get();
         project.setTitle(request.getTitle());
         project.setDescription(request.getDescription());
+        project.setTags(request.getTags());
         project.setPriceDay(request.getPriceDay());
         project.setPriceHour(request.getPriceHour());
+        project.setPriceProject(request.getPriceProject());
 
         service.update(project);
         return ResponseEntity.ok().build();
@@ -95,6 +84,7 @@ public class BusinessProjectController {
 
         return ResponseEntity.created(location).build();
     }
+
 
     @DeleteMapping("{id}")
     public ResponseEntity<Object> deleteBusinessProject(@PathVariable("id") String idBusinessProject) {
