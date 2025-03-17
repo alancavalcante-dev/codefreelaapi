@@ -23,8 +23,6 @@ public class BusinessProjectUpdateDTO {
     @Size(min=2, message = "Erro", max = 100)
     String description;
 
-    List<String> tags;
-
     BigDecimal priceDay;
 
     BigDecimal priceHour;

@@ -7,14 +7,21 @@ import io.github.alancavalcante_dev.codefreelaapi.dto.businesproject.BusinessPro
 import io.github.alancavalcante_dev.codefreelaapi.mapperstruct.BusinessProjectMapper;
 import io.github.alancavalcante_dev.codefreelaapi.model.BusinessProject;
 import io.github.alancavalcante_dev.codefreelaapi.service.BusinessProjectService;
+import io.github.alancavalcante_dev.codefreelaapi.specifications.BusinessProjectSpecification;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.math.BigDecimal;
 import java.net.URI;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -31,14 +38,33 @@ public class BusinessProjectController {
 
 
     @GetMapping
-    public ResponseEntity<List<BusinessProjectResponseDTO>> getAllBusinessProject() {
-        List<BusinessProjectResponseDTO> listDTO = service.getAllBusinessProject()
-                .stream().map( project -> mapper.entityToResponse(project)).toList();
+    public ResponseEntity<Page<BusinessProjectResponseDTO>> getAllBusinessProject(
+            @RequestParam(value = "title", required = false) String title,
+            @RequestParam(value = "description", required = false) String description,
+            @RequestParam(value = "price-day", required = false) BigDecimal priceDay,
+            @RequestParam(value = "price-hour", required = false) BigDecimal priceHour,
+            @RequestParam(value = "price-project", required = false) BigDecimal priceProject,
+            @RequestParam(value = "closing-date", required = false) LocalDate closingDate,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+            ) {
 
-        if(listDTO.isEmpty()) {
+        Specification<BusinessProject> spec = Specification.where(null);
+        spec.and(BusinessProjectSpecification.hasTitle(title));
+        spec.and(BusinessProjectSpecification.hasDescription(description));
+        spec.and(BusinessProjectSpecification.gtaOrEqualPriceDay(priceDay));
+        spec.and(BusinessProjectSpecification.gtaOrEqualPriceHour(priceHour));
+        spec.and(BusinessProjectSpecification.gtaOrEqualPriceProject(priceProject));
+        spec.and(BusinessProjectSpecification.gtaOrEqualClosingDate(closingDate));
+
+        Pageable pageable = PageRequest.of(page, size);
+        Page<BusinessProject> result = service.findAllWithPage(spec, pageable);
+        Page<BusinessProjectResponseDTO> resultDTO = result.map(project -> mapper.entityToResponse(project));
+
+        if(result.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
-        return ResponseEntity.ok(listDTO);
+        return ResponseEntity.ok(resultDTO);
     }
 
 
@@ -66,7 +92,6 @@ public class BusinessProjectController {
         BusinessProject project = businessOptional.get();
         project.setTitle(request.getTitle());
         project.setDescription(request.getDescription());
-        project.setTags(request.getTags());
         project.setPriceDay(request.getPriceDay());
         project.setPriceHour(request.getPriceHour());
         project.setPriceProject(request.getPriceProject());

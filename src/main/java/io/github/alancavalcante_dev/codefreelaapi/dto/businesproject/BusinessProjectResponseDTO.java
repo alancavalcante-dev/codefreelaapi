@@ -16,10 +16,11 @@ public class BusinessProjectResponseDTO {
     String idBusinessProject;
     String title;
     String description;
-    List<String> tags;
     BigDecimal priceDay;
     BigDecimal priceHour;
     BigDecimal priceProject;
     LocalDate closingDate;
     StateBusiness state;
+
+
 }

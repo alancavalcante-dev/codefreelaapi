@@ -38,9 +38,6 @@ public class BusinessProject {
     @Column(name = "description", length = 100, nullable = false)
     private String description;
 
-    @Column(name = "tags")
-    private List<String> tags;
-
     @Column(name = "price_day", precision = 8, scale = 2)
     private BigDecimal priceDay;
 

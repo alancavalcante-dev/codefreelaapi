@@ -27,7 +27,6 @@ public class BusinessProjectInsertDTO {
     @Size(min=2, message = "Description: Tem que ter no minímo de 2 caracteres e no máximo de 100 caracteres", max = 100)
     String description;
 
-    List<String> tags;
 
     BigDecimal priceDay;
 

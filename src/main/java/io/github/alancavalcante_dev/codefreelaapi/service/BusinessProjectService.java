@@ -13,6 +13,9 @@ import io.github.alancavalcante_dev.codefreelaapi.repository.ProfileRepository;
 import io.github.alancavalcante_dev.codefreelaapi.validate.BusinessProjectValidate;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -38,6 +41,10 @@ public class BusinessProjectService {
 
     public List<BusinessProject> getAllBusinessProject() {
         return this.bussinesProjectRepository.findAll();
+    }
+
+    public Page<BusinessProject> findAllWithPage(Specification<BusinessProject> spec, Pageable page){
+        return this.bussinesProjectRepository.findAll(spec, page);
     }
 
     public Optional<BusinessProject> findyByIdBusinessProject(UUID uuid) {
