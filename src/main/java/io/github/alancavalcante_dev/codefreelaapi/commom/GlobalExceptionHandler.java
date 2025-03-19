@@ -63,7 +63,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(CurrentDateGreaterThanProjectDate.class)
     public ResponseEntity<GlobalExceptionDTO> handlerCurrentDateGreaterThanProjectDate(CurrentDateGreaterThanProjectDate ex) {
         GlobalExceptionDTO exeption = Error.defaultError(
-                "Data do projeto menor que a data atual", HttpStatus.BAD_REQUEST.value(), List.of());
+                "Data do projeto menor que a data atual", HttpStatus.BAD_REQUEST.value(), List.of(ex.getMessage()));
         return ResponseEntity.status(exeption.getStatus()).body(exeption);
     }
 

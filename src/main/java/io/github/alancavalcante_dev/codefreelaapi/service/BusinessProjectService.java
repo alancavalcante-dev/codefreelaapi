@@ -53,9 +53,9 @@ public class BusinessProjectService {
 
 
     @Transactional
-    public BusinessProject save(BusinessProjectInsertDTO request) throws Exception {
+    public BusinessProject save(BusinessProjectInsertDTO request) throws RuntimeException {
         Optional<Profile> client = profileRepository.findById(UUID.fromString(request.getIdProfile()));
-        if (client.isEmpty()) { throw new Exception("Perfil não encontrado");}
+        if (client.isEmpty()) { throw new RuntimeException("Perfil não encontrado");}
 
         BusinessProject projectMapping = businessProjectMapper.insertToEntity(request);
         projectMapping.setProfile(client.get());
