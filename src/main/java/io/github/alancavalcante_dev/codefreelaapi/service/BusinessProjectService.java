@@ -58,12 +58,13 @@ public class BusinessProjectService {
         if (client.isEmpty()) { throw new Exception("Perfil não encontrado");}
 
         BusinessProject projectMapping = businessProjectMapper.insertToEntity(request);
+        projectMapping.setProfile(client.get());
+
         businessProjectValidate.save(projectMapping);
         BusinessProject projectSave = bussinesProjectRepository.save(projectMapping);
 
         BusinessProjectProfile profile = new BusinessProjectProfile();
         profile.setBusinessProject(projectSave);
-        profile.setProfile(client.get());
         projectSave.getProfiles().add(profile);
 
         return bussinesProjectRepository.save(projectSave);

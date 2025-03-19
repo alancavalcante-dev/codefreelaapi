@@ -25,8 +25,8 @@ public class BusinessProjectProfile {
     private BusinessProject businessProject;
 
     @ManyToOne
-    @JoinColumn(name = "id_profile", nullable = false)
-    private Profile profile;
+    @JoinColumn(name = "id_profile_chosen")
+    private Profile profileChosen;
 
     // Opcional
     // Apos cliente e dev confirmarem projetos, para o resto vira state Finished e para os negociadores, fica Open.

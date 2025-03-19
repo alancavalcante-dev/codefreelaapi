@@ -61,6 +61,7 @@ public class BusinessProjectController {
         Page<BusinessProject> result = service.findAllWithPage(spec, pageable);
         Page<BusinessProjectResponseDTO> resultDTO = result.map(project -> mapper.entityToResponse(project));
 
+
         if(result.isEmpty()) {
             return ResponseEntity.noContent().build();
         }

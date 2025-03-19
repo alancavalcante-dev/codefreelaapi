@@ -1,6 +1,7 @@
 package io.github.alancavalcante_dev.codefreelaapi.dto.businesproject;
 
 import io.github.alancavalcante_dev.codefreelaapi.dto.StateBusiness;
+import io.github.alancavalcante_dev.codefreelaapi.model.Profile;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,7 +14,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 public class BusinessProjectResponseDTO {
-    String idBusinessProject;
+    String idProfile;
     String title;
     String description;
     BigDecimal priceDay;

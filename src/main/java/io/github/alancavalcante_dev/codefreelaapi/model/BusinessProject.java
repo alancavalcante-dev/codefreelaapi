@@ -31,7 +31,7 @@ public class BusinessProject {
 
     @ManyToOne
     @JoinColumn(name = "id_profile", nullable = false)
-    private Profile idProfileCreate;
+    private Profile profile;
 
     @OneToMany(mappedBy = "businessProject", cascade = CascadeType.REMOVE)
     private List<BusinessProjectProfile> profiles = new ArrayList<>();
