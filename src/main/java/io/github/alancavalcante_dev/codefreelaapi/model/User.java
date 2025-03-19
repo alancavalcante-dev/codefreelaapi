@@ -3,6 +3,7 @@ package io.github.alancavalcante_dev.codefreelaapi.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -20,5 +21,7 @@ public class User {
 
     @Column(length = 20, nullable = false)
     private String password;
+
+//    List<String> roles;
 
 }

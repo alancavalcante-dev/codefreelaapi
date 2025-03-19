@@ -18,6 +18,8 @@ public class BusinessProjectProfile {
     @Column(name = "id_business_project_profile")
     private UUID idBusinessProjectProfile;
 
+
+
     @ManyToOne
     @JoinColumn(name = "id_business_project", nullable = false)
     private BusinessProject businessProject;
@@ -29,8 +31,6 @@ public class BusinessProjectProfile {
     // Opcional
     // Apos cliente e dev confirmarem projetos, para o resto vira state Finished e para os negociadores, fica Open.
 
-    @OneToOne
-    private Project project;
 
     @Column(name = "confirm_client")
     private boolean confirmClient;

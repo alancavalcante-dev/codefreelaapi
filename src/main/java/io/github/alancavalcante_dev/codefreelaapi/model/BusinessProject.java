@@ -29,6 +29,10 @@ public class BusinessProject {
     @Column(name = "id_business_project")
     private UUID idBusinessProject;
 
+    @ManyToOne
+    @JoinColumn(name = "id_profile", nullable = false)
+    private Profile idProfileCreate;
+
     @OneToMany(mappedBy = "businessProject", cascade = CascadeType.REMOVE)
     private List<BusinessProjectProfile> profiles = new ArrayList<>();
 
@@ -56,5 +60,8 @@ public class BusinessProject {
     @CreatedDate
     @Column(name = "date_created")
     private LocalDate dateCreated;
+
+    @OneToOne
+    private Project project;
 
 }

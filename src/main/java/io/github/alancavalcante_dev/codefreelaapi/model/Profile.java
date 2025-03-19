@@ -8,6 +8,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -50,5 +51,8 @@ public class Profile {
     @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "id_user")
     private User user;
+
+    @OneToMany
+    private List<BusinessProject> businessProject;
 
 }

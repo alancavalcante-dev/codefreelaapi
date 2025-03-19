@@ -18,8 +18,8 @@ public class Project {
     private UUID idProject;
 
     @OneToOne(mappedBy = "project", optional = false)
-    @JoinColumn(name = "id_bussines_project_profile", nullable = false)
-    private BusinessProjectProfile idBusinessProjectProfile;
+    @JoinColumn(name = "id_bussines_project", nullable = false)
+    private BusinessProject idBusinessProject;
 
     @Column(name = "title", length = 50, nullable = false)
     private String title;
