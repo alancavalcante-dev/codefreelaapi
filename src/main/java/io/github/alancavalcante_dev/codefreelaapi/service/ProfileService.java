@@ -13,6 +13,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -85,6 +86,7 @@ public class ProfileService {
         userValidate.save(profile.getUser());
         profileValidate.save(profile);
 
+        profile.setBalance(BigDecimal.valueOf(0.0));
         User userSave = userRepository.save(profile.getUser());
         Address addressSave = addressRepository.save(profile.getAddress());
 

@@ -22,7 +22,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.math.BigDecimal;
 import java.net.URI;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -60,7 +59,6 @@ public class BusinessProjectController {
         Pageable pageable = PageRequest.of(page, size);
         Page<BusinessProject> result = service.findAllWithPage(spec, pageable);
         Page<BusinessProjectResponseDTO> resultDTO = result.map(project -> mapper.entityToResponse(project));
-
 
         if(result.isEmpty()) {
             return ResponseEntity.noContent().build();
