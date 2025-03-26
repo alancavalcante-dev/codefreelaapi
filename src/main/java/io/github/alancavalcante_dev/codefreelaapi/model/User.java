@@ -1,7 +1,9 @@
 package io.github.alancavalcante_dev.codefreelaapi.model;
 
+import io.hypersistence.utils.hibernate.type.array.ListArrayType;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.Type;
 
 import java.util.List;
 import java.util.UUID;
@@ -22,6 +24,8 @@ public class User {
     @Column(length = 20, nullable = false)
     private String password;
 
-//    List<String> roles;
+    @Column(name = "roles", columnDefinition = "varchar[]")
+    @Type(ListArrayType.class)
+    List<String> roles;
 
 }

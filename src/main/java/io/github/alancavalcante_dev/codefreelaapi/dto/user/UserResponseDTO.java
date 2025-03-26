@@ -10,8 +10,7 @@ import lombok.Setter;
 @Setter
 public class UserResponseDTO {
 
-    @Size(min = 2, message = "Mínimo de 2 caracteres necessários.")
-    @NotNull
-    @NotBlank
+    String idUsername;
     String username;
+
 }
