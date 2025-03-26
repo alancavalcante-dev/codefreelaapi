@@ -27,10 +27,12 @@ public class Transactions {
 
     private BigDecimal value;
 
-    @Column(name = "profile_payer", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "profile_payer")
     private Profile profilePayer;
 
-    @Column(name = "profile_received", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "profile_received")
     private Profile profileReceived;
 
     @CreatedDate
