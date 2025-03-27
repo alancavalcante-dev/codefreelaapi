@@ -21,7 +21,7 @@ public class User {
     @Column(length = 20, nullable = false, unique = true)
     private String username;
 
-    @Column(length = 20, nullable = false)
+    @Column(length = 254, nullable = false)
     private String password;
 
     @Column(name = "roles", columnDefinition = "varchar[]")

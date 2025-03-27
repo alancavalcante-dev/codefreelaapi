@@ -2,6 +2,7 @@ package io.github.alancavalcante_dev.codefreelaapi.service;
 
 import io.github.alancavalcante_dev.codefreelaapi.model.User;
 import io.github.alancavalcante_dev.codefreelaapi.repository.UserRepository;
+import io.github.alancavalcante_dev.codefreelaapi.validate.UserValidate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,7 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final UserValidate userValidate;
 
     public Optional<User> getUserByLogin(String login){
         return userRepository.findByUsername(login);
@@ -20,6 +22,11 @@ public class UserService {
 
     public List<User> getAllUsers() {
         return userRepository.findAll();
+    }
+
+    public User save(User user) {
+        userValidate.save(user);
+        return userRepository.save(user);
     }
 
 }

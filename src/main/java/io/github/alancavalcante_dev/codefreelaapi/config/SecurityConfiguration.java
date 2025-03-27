@@ -4,7 +4,9 @@ package io.github.alancavalcante_dev.codefreelaapi.config;
 import io.github.alancavalcante_dev.codefreelaapi.security.CustomizeUserDetailsService;
 import io.github.alancavalcante_dev.codefreelaapi.service.UserService;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfiguration {
 
     @Bean
@@ -28,6 +31,7 @@ public class SecurityConfiguration {
                 })
                 .authorizeHttpRequests(authorize -> { // configurações de rotas e permissões
                     authorize.requestMatchers("/login").permitAll();
+                    authorize.requestMatchers(HttpMethod.POST, "api/users").permitAll();
                     authorize.anyRequest().authenticated();
                 })
                 .build();
