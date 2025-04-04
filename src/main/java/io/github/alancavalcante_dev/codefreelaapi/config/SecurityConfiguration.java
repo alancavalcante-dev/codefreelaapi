@@ -17,6 +17,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
+import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.stereotype.Component;
 
@@ -42,24 +44,31 @@ public class SecurityConfiguration {
                     oauth.loginPage("/login");
                     oauth.successHandler(loginSuccessHandlerCustom);
                 })
-                .authenticationProvider(authenticationProvider) // Aqui garantimos que o provider será usado!
+                .oauth2ResourceServer(oauth2RS -> oauth2RS.jwt(Customizer.withDefaults())) // habilitar jwt para validar usuario
                 .build();
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(10);
-    }
 
-
-//    @Bean
-    public UserDetailsService userDetailsService(UserService userService) {
-        return new CustomizeUserDetailsService(userService);
-    }
 
     // definindo prefixo da role, tirando "ROLE_"
+    // Configura, no Http Basic, o prefixo ROLE
+
     @Bean
     public GrantedAuthorityDefaults grantedAuthorityDefaults() {
         return new GrantedAuthorityDefaults("");
+    }
+
+
+    // SCOPE_GERENTE = padrão
+    // Configura, no token Jwt, o prefixo SCOPE
+    @Bean
+    public JwtAuthenticationConverter jwtAuthenticationConverter() {
+        var authoritiesConverter = new JwtGrantedAuthoritiesConverter();
+        authoritiesConverter.setAuthorityPrefix("");
+
+        var converter = new JwtAuthenticationConverter();
+        converter.setJwtGrantedAuthoritiesConverter(authoritiesConverter);
+
+        return converter;
     }
 }
