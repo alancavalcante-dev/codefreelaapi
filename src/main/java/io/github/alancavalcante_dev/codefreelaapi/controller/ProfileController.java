@@ -9,6 +9,7 @@ import io.github.alancavalcante_dev.codefreelaapi.service.ProfileService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -27,6 +28,7 @@ public class ProfileController {
 
 
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<ProfileResponseDTO>> getAllProfile() {
         List<Profile> allProfiles = service.getAllProfiles();
         List<ProfileResponseDTO> listProfileClientDTO = allProfiles.stream().

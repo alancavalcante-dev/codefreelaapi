@@ -20,9 +20,7 @@ public class CustomRegisteredClientRepository implements RegisteredClientReposit
     private final ClientSettings clientSettings;
 
     @Override
-    public void save(RegisteredClient registeredClient) {
-
-    }
+    public void save(RegisteredClient registeredClient) {}
 
     @Override
     public RegisteredClient findById(String id) {
@@ -33,7 +31,7 @@ public class CustomRegisteredClientRepository implements RegisteredClientReposit
     public RegisteredClient findByClientId(String clientId) {
         var client = clientService.getClientById(clientId);
 
-        if (client == null) {
+        if(client == null){
             return null;
         }
 
