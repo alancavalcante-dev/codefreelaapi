@@ -1,6 +1,9 @@
 spring:
   application:
     name: codefreelaapi
+  output:
+    ansi:
+      enabled: ALWAYS
   datasource:
     url: jdbc:postgresql://localhost:5434/codefreeladb
     username: postgres
