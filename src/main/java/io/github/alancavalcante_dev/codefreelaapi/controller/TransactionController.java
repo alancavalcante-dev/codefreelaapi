@@ -2,6 +2,8 @@ package io.github.alancavalcante_dev.codefreelaapi.controller;
 
 import io.github.alancavalcante_dev.codefreelaapi.model.Transactions;
 import io.github.alancavalcante_dev.codefreelaapi.service.TransactionsService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,11 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("api/transactions")
 @RequiredArgsConstructor
+@Tag(name = "Transações")
 public class TransactionController {
 
     private final TransactionsService transactionService;
 
     @PostMapping
+    @Operation(summary = "Cadastra uma transação")
     public ResponseEntity<Transactions> create(@RequestBody Transactions transaction) {
         return ResponseEntity.ok(transactionService.createTransaction(transaction));
     }

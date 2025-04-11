@@ -6,6 +6,9 @@ import io.github.alancavalcante_dev.codefreelaapi.dto.profile.ProfileUpdateReque
 import io.github.alancavalcante_dev.codefreelaapi.mapperstruct.ProfileMapper;
 import io.github.alancavalcante_dev.codefreelaapi.model.Profile;
 import io.github.alancavalcante_dev.codefreelaapi.service.ProfileService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.extensions.ExtensionProperty;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +24,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("api/profile")
 @RequiredArgsConstructor
+@Tag(name = "Perfil de usuário")
 public class ProfileController {
 
     private final ProfileService service;
@@ -29,6 +33,7 @@ public class ProfileController {
 
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
+    @Operation(summary = "Pega todos os perfis")
     public ResponseEntity<List<ProfileResponseDTO>> getAllProfile() {
         List<Profile> allProfiles = service.getAllProfiles();
         List<ProfileResponseDTO> listProfileClientDTO = allProfiles.stream().
@@ -41,6 +46,7 @@ public class ProfileController {
     }
 
     @GetMapping("{id}")
+    @Operation(summary = "Pega um perfil por Id")
     public ResponseEntity<ProfileResponseDTO> getProfile(@PathVariable("id") String id) {
         return service.getByIdProfile(UUID.fromString(id))
                 .map(p -> ResponseEntity.ok(mapper.toResponseDTO(p)))
@@ -48,6 +54,7 @@ public class ProfileController {
     }
 
     @PostMapping
+    @Operation(summary = "Cadastra um perfil")
     public ResponseEntity<ProfileInsertRequestDTO> postProfile(@RequestBody @Valid ProfileInsertRequestDTO profile ) {
         Profile entity = mapper.toEntity(profile);
         service.save(entity);
@@ -60,6 +67,7 @@ public class ProfileController {
 
 
     @PutMapping("{id}")
+    @Operation(summary = "Altera o perfil por Id")
     public ResponseEntity<ProfileResponseDTO> updateProfile(
             @PathVariable("id") String idClient,
             @RequestBody @Valid ProfileUpdateRequestDTO profileUpdateResponseDTO
@@ -76,6 +84,7 @@ public class ProfileController {
 
 
     @DeleteMapping("{id}")
+    @Operation(summary = "Deleta um perfil")
     public ResponseEntity<Object> deleteProfile(@PathVariable("id") String id) {
         return service.getByIdProfile(UUID.fromString(id))
                 .map(p -> {

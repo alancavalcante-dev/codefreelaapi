@@ -8,6 +8,8 @@ import io.github.alancavalcante_dev.codefreelaapi.mapperstruct.BusinessProjectMa
 import io.github.alancavalcante_dev.codefreelaapi.model.BusinessProject;
 import io.github.alancavalcante_dev.codefreelaapi.service.BusinessProjectService;
 import io.github.alancavalcante_dev.codefreelaapi.specifications.BusinessProjectSpecification;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +30,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("api/projects/business")
-@Tag(name = "Negociação de projetos")
+@Tag(name = "Negociação de projeto")
 public class BusinessProjectController {
 
     @Autowired
@@ -39,6 +41,7 @@ public class BusinessProjectController {
 
 
     @GetMapping
+    @Operation(summary = "Pega todas negociações de projetos")
     public ResponseEntity<Page<BusinessProjectResponseDTO>> getAllBusinessProject(
             @RequestParam(value = "title", required = false) String title,
             @RequestParam(value = "description", required = false) String description,
@@ -70,6 +73,7 @@ public class BusinessProjectController {
 
 
     @GetMapping("{id}")
+    @Operation(summary = "Pega a negociação de projeto por Id")
     public ResponseEntity<BusinessProjectResponseDTO> getIdBusinessProject(@PathVariable("id") String id) {
         Optional<BusinessProject> projectOptional = service.findyByIdBusinessProject(UUID.fromString(id));
         if (projectOptional.isEmpty()) { return ResponseEntity.notFound().build(); }
@@ -81,8 +85,19 @@ public class BusinessProjectController {
     }
 
 
+    @PostMapping
+    @Operation(summary = "Cadastra uma negociação de projeto")
+    public ResponseEntity<BusinessProjectInsertDTO> postBusinessProject(@RequestBody @Valid BusinessProjectInsertDTO request) throws Exception {
+        BusinessProject business = service.save(request);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().
+                path("/{id}").buildAndExpand(business.getIdBusinessProject()).toUri();
+
+        return ResponseEntity.created(location).build();
+    }
+
 
     @PutMapping("{id}")
+    @Operation(summary = "Altera a negociação de projeto por Id")
     public ResponseEntity<Object> updateBusinessProject(
             @PathVariable("id") String id,
             @RequestBody @Valid BusinessProjectUpdateDTO request
@@ -102,17 +117,8 @@ public class BusinessProjectController {
     }
 
 
-    @PostMapping
-    public ResponseEntity<BusinessProjectInsertDTO> postBusinessProject(@RequestBody @Valid BusinessProjectInsertDTO request) throws Exception {
-        BusinessProject business = service.save(request);
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().
-                path("/{id}").buildAndExpand(business.getIdBusinessProject()).toUri();
-
-        return ResponseEntity.created(location).build();
-    }
-
-
     @DeleteMapping("{id}")
+    @Operation(summary = "Deleta uma negociação de projeto")
     public ResponseEntity<Object> deleteBusinessProject(@PathVariable("id") String idBusinessProject) {
         return service.findyByIdBusinessProject(UUID.fromString(idBusinessProject))
                 .map( project -> {

@@ -6,6 +6,8 @@ import io.github.alancavalcante_dev.codefreelaapi.dto.user.UserResponseDTO;
 import io.github.alancavalcante_dev.codefreelaapi.mapperstruct.UserMapper;
 import io.github.alancavalcante_dev.codefreelaapi.model.User;
 import io.github.alancavalcante_dev.codefreelaapi.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/users")
 @RequiredArgsConstructor
+@Tag(name = "Usuário")
 public class UserController {
 
     private final UserService service;
@@ -26,6 +29,7 @@ public class UserController {
 
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
+    @Operation(summary = "Pega todos usuários")
     public ResponseEntity<List<UserResponseDTO>> getAllUsers() {
         List<User> users = service.getAllUsers();
         if (users.isEmpty()) return ResponseEntity.noContent().build();
@@ -36,6 +40,7 @@ public class UserController {
 
 
     @PostMapping
+    @Operation(summary = "Cadastra um usuário")
     public ResponseEntity<UserResponseDTO> registroDeUsuario(@RequestBody @Valid UserRequestDTO userDTO) {
         User user = mapper.requestToEntity(userDTO);
         user.setPassword(encoder.encode(userDTO.getPassword()));
