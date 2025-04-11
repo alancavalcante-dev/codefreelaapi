@@ -44,6 +44,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(authorize -> { // configurações de rotas e permissões
                     authorize.requestMatchers("/login").permitAll();
                     authorize.requestMatchers(HttpMethod.POST, "api/users").permitAll();
+                    authorize.requestMatchers("/**").hasRole("ADMIN");
                     authorize.anyRequest().authenticated();
                 })
                 .oauth2Login(oauth -> {

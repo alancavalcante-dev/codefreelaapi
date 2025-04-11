@@ -32,7 +32,6 @@ public class ProfileController {
 
 
     @GetMapping
-    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Pega todos os perfis")
     public ResponseEntity<List<ProfileResponseDTO>> getAllProfile() {
         List<Profile> allProfiles = service.getAllProfiles();
