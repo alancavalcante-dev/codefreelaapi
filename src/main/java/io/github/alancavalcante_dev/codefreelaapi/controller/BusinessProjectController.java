@@ -8,6 +8,7 @@ import io.github.alancavalcante_dev.codefreelaapi.mapperstruct.BusinessProjectMa
 import io.github.alancavalcante_dev.codefreelaapi.model.BusinessProject;
 import io.github.alancavalcante_dev.codefreelaapi.service.BusinessProjectService;
 import io.github.alancavalcante_dev.codefreelaapi.specifications.BusinessProjectSpecification;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -27,6 +28,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("api/projects/business")
+@Tag(name = "Negociação de projetos")
 public class BusinessProjectController {
 
     @Autowired
