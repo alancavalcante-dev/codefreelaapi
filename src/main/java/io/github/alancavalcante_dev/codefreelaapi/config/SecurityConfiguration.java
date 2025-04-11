@@ -3,6 +3,7 @@ package io.github.alancavalcante_dev.codefreelaapi.config;
 
 import io.github.alancavalcante_dev.codefreelaapi.security.CustomAuthenticationProvider;
 import io.github.alancavalcante_dev.codefreelaapi.security.CustomizeUserDetailsService;
+import io.github.alancavalcante_dev.codefreelaapi.security.JwtCustomAuthenticationFilter;
 import io.github.alancavalcante_dev.codefreelaapi.security.LoginSuccessHandlerCustom;
 import io.github.alancavalcante_dev.codefreelaapi.service.UserService;
 import org.springframework.context.annotation.Bean;
@@ -19,16 +20,20 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
+import org.springframework.security.oauth2.server.resource.web.authentication.BearerTokenAuthenticationFilter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.stereotype.Component;
 
 @Component
 @EnableWebSecurity
-@EnableMethodSecurity
+@EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true)
 public class SecurityConfiguration {
 
     @Bean
-    public SecurityFilterChain securityFilterChain(CustomAuthenticationProvider authenticationProvider, HttpSecurity httpSecurity, LoginSuccessHandlerCustom loginSuccessHandlerCustom) throws Exception {
+    public SecurityFilterChain securityFilterChain(
+            JwtCustomAuthenticationFilter jwtCustomAuthenticationFilter,
+            HttpSecurity httpSecurity,
+            LoginSuccessHandlerCustom loginSuccessHandlerCustom) throws Exception {
         return httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .httpBasic(Customizer.withDefaults()) // autenticação via aplicações
@@ -44,10 +49,10 @@ public class SecurityConfiguration {
                     oauth.loginPage("/login");
                     oauth.successHandler(loginSuccessHandlerCustom);
                 })
-                .oauth2ResourceServer(oauth2RS -> oauth2RS.jwt(Customizer.withDefaults())) // habilitar jwt para validar usuario
+                .oauth2ResourceServer(oauth2RS -> oauth2RS.jwt(Customizer.withDefaults()))
+                .addFilterAfter(jwtCustomAuthenticationFilter, BearerTokenAuthenticationFilter.class)
                 .build();
     }
-
 
 
     // definindo prefixo da role, tirando "ROLE_"

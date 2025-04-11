@@ -32,6 +32,7 @@ public class LoginSuccessHandlerCustom extends SavedRequestAwareAuthenticationSu
         String email = oAuth2User.getAttribute("email");
 
         User user = userService.getByEmail(email);
+        System.out.println(user);
 
         if (user == null) {
             user = registerUser(email);
@@ -50,7 +51,7 @@ public class LoginSuccessHandlerCustom extends SavedRequestAwareAuthenticationSu
         usuario.setEmail(email);
         usuario.setUsername(getLoginByEmail(email));
         usuario.setPassword(SENHA_PADRAO);
-        usuario.setRoles(List.of("ADMIN"));
+        usuario.setRoles(List.of("OPERADOR"));
         return userService.save(usuario);
     }
 
